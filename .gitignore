@@ -1,0 +1,16 @@
+# deps / build
+node_modules/
+dist/
+coverage/
+
+# reports generated during local runs
+geo-report*.html
+geo-report*.json
+*.tsbuildinfo
+
+# env & editor
+.env
+.env.*
+.DS_Store
+.idea/
+.vscode/
