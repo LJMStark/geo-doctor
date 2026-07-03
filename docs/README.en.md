@@ -4,7 +4,7 @@
 
 **Can AI see you? Give your site an AI-search checkup in 30 seconds.**
 
-[简体中文](../README.md) · [Scoring methodology](methodology.md)
+[简体中文](../README.md) · [Scoring methodology](methodology.md) · [Well-known sites leaderboard](showcase.md)
 
 </div>
 

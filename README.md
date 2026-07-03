@@ -6,7 +6,7 @@
 
 *Can AI see you? Give your site an AI-search checkup in 30 seconds.*
 
-[English](docs/README.en.md) · [评分方法论](docs/methodology.md) · [Roadmap](#-roadmap)
+[English](docs/README.en.md) · [评分方法论](docs/methodology.md) · [知名网站体检榜](docs/showcase.md) · [Roadmap](#-roadmap)
 
 [![npm](https://img.shields.io/npm/v/geo-doctor?color=0f766e)](https://www.npmjs.com/package/geo-doctor)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
@@ -53,6 +53,8 @@ npx geo-doctor audit yoursite.com --html
 ```
 
 外加一份可以直接发给老板/客户的 **HTML 体检报告**（`--html`）和机器可读的 **JSON**（`--json`）。
+
+> 🏆 我们给 11 个知名网站跑了一遍：**Stripe 77 分登顶，HN 49 分垫底，OpenAI 官网直接拒绝了 AI 爬虫**——完整榜单和 5 个有意思的发现见 [知名网站体检榜](docs/showcase.md)。
 
 ## 为什么是 GEODoctor？
 
