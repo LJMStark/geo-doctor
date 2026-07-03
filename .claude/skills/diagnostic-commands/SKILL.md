@@ -65,6 +65,27 @@ ffmpeg -y -sseof -0.5 -i docs/assets/demo-zh.gif -frames:v 1 /tmp/last.png && op
 
 # 重录 GIF 的前置 wrapper（tape 依赖 /tmp/geo-bin/geo-doctor）
 mkdir -p /tmp/geo-bin && printf '#!/bin/sh\nexec node %s/dist/cli.js "$@"\n' "$PWD" > /tmp/geo-bin/geo-doctor && chmod +x /tmp/geo-bin/geo-doctor
+
+# 改 tape 前先确认 DSL 命令名（vhs 是 Hide/Show,不存在 Hidden——failure-archaeology 案 3 的规矩）
+vhs manual | grep -iE "^(Hide|Show|Type|Sleep|Set|Output)"
+```
+
+## 文档同步
+
+```bash
+# 从构建产物生成 methodology.md 的规则×证据表（改规则后同步手工表用,输出到 stdout 自行粘贴）
+node --input-type=module -e "
+import { allRules, DIMENSION_LABELS, getEvidence } from './dist/index.js';
+for (const dim of ['access','structure','chunkability','citability','freshness']) {
+  console.log('### ' + DIMENSION_LABELS[dim].zh + ' / ' + DIMENSION_LABELS[dim].en + '\n');
+  console.log('| 规则 | 权重 | 检查内容 | 证据 |');
+  console.log('|---|---|---|---|');
+  for (const r of allRules.filter(r => r.dimension === dim)) {
+    const ev = r.evidence.map(id => { const e = getEvidence(id); return '[' + e.source.split('(')[0].trim() + '](' + e.url + ')'; }).join('、');
+    console.log('| \`' + r.id + '\` | ' + r.weight + ' | ' + r.name.zh + ' | ' + ev + ' |');
+  }
+  console.log('');
+}"
 ```
 
 ## CI 与仓库

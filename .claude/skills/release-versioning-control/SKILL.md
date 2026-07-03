@@ -11,7 +11,7 @@ description: GEODoctor 发版与版本号管控——npm publish、GitHub Releas
 
 ## 版本号双源合同
 
-版本号存在于两处且必须一致：`package.json` 的 `version` 和 `src/version.ts` 的 `VERSION` 常量。`tests/version.test.ts` 强制校验。**发版第一步永远是同时改这两处**——只改一处，CI 会替你脸红。
+版本号存在于两处且必须一致：`package.json` 的 `version` 和 `src/version.ts` 的 `VERSION` 常量。`tests/version.test.ts` 强制校验。**发版第一步永远是同时改这两处**——只改一处，CI 会替你脸红。（爬虫 UA 的版本号从 `VERSION` 派生，不是第三源，改双源即自动跟随。）
 
 ## npm 发布（2026-07-03 起被用户推迟，发布时照此执行）
 
@@ -27,10 +27,10 @@ description: GEODoctor 发版与版本号管控——npm publish、GitHub Releas
 
 ## stub 承诺契约
 
-`src/cli.ts:97` 附近注册了 `probe` / `fix` / `watch` 三个 stub 子命令，文案写死"coming in v0.2"。这是对外承诺：
+`src/cli.ts` 注册了 `probe` / `fix`（文案 v0.2）与 `watch`（文案 v0.3）三个 stub 子命令。这是对外承诺：
 
-- **版本号跳到 0.2.x 之前，probe 和 fix 至少一个必须真实现**，否则 stub 文案从"预告"变"谎言"
-- 若 roadmap 变更（如 watch 提前），stub 文案、README 双语 Roadmap 段、Release notes 三处要一起改
+- **每个 stub 的版本文案必须与 README 双语 Roadmap 保持一致**（代码里有同步注释锚点）——roadmap 变更时 stub 文案、两份 README、Release notes 四处一起改
+- **版本号跳到 0.2.x 之前，probe 和 fix 至少一个必须真实现**，否则对应 stub 从"预告"变"谎言"；同理 0.3.x 前 watch 必须实现
 
 ## Release 惯例
 

@@ -1,6 +1,6 @@
 ---
 name: security-boundaries
-description: GEODoctor 安全边界契约——处理任何来自被审计站点的数据、新增 fetch 路径、改报告渲染时必读。三道防线+UA 伦理红线。
+description: GEODoctor 安全边界契约——处理来自被审计站点的任何数据、新增 fetch 路径、改报告渲染时必读。含 SSRF、终端注入、XSS 三道防线与不许伪装 UA 的红线；依赖漏洞不在此列（走 pnpm audit）。
 ---
 
 # 安全边界契约
@@ -11,7 +11,7 @@ description: GEODoctor 安全边界契约——处理任何来自被审计站点
 
 ## 威胁模型一句话
 
-被审计的站点是**潜在敌对输入源**：我们主动去抓一个陌生网站，它返回什么我们无法控制。v0.1 的三次真实加固都源于此（代码评审发现，`tests/security.test.ts` 全程锚定）。
+被审计的站点是**潜在敌对输入源**：我们主动去抓一个陌生网站，它返回什么我们无法控制。D1/D2 是 v0.1 代码评审后的真实加固（回归锚定在 `tests/security.test.ts`）；D3 属初始设计，回归锚定在 `tests/reports.test.ts` 的 XSS 注入用例。
 
 ## 三道防线（改动必须保持，新路径必须接入）
 
@@ -30,15 +30,15 @@ HTML 报告会被用户转发给老板/客户——存储型 XSS 的完美投递
 
 ## UA 伦理红线
 
-UA 是真实身份并带仓库链接（`src/crawler/fetcher.ts:4`）。**被拒绝（openai.com 实测 403）就接受结果，绝不伪装浏览器 UA 绕过**。这不是技术限制而是产品底线：一个教人"对 AI 爬虫友好"的工具自己伪装爬虫，定位即崩塌。PR 出现 UA 伪装/轮换直接拒。同理：不加重试轰炸、不绕 robots 明确的 Disallow 抓内容页。
+UA 是真实身份并带仓库链接（`src/crawler/fetcher.ts` 顶部，版本号从 `VERSION` 派生）。**被拒绝（openai.com 实测 403）就接受结果，绝不伪装浏览器 UA 绕过**。这不是技术限制而是产品底线：一个教人"对 AI 爬虫友好"的工具自己伪装爬虫，定位即崩塌。PR 出现 UA 伪装/轮换直接拒。同理：不加重试轰炸、不绕 robots 明确的 Disallow 抓内容页。
 
 ## 源码字节纪律
 
-控制字符在源码中一律 `\xNN` 转义书写（`CONTROL_CHARS_RE` 用 `new RegExp('\\x1b...')` 形式的由来见 [failure-archaeology](../failure-archaeology/SKILL.md) 案 5）。字面不可见字节 diff 里人眼看不见，是 review 盲区。
+控制字符在源码中一律 `\xNN` 转义书写（`CONTROL_CHARS_RE` 用 `new RegExp('\\x1b...')` 形式的由来见 [failure-archaeology](../failure-archaeology/SKILL.md) 案 5）。字面不可见字节 diff 里人眼看不见，是 review 盲区。若已有文件混入不可见字节，Edit 类内容匹配工具会失效——用**行号定位**的 perl/sed 替换（案 5 的修复手法）。
 
 ## 自保参数（DoS 防护，双向的）
 
-2MB body 截断 + 单请求超时保护**我们**；串行抓取、页数上限 10 保护**对方**。放宽任何一个都要同时想两边。
+2MB body 截断 + 单请求超时保护**我们**；串行抓取、页数上限 10（CLI 层 `clampInt` 强制；库 API `crawlSite` 本身无上限，调用方自负）保护**对方**。放宽任何一个都要同时想两边。
 
 ## 什么时候不该用这份文档
 

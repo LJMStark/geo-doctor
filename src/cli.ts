@@ -87,18 +87,19 @@ program
     }
   });
 
-for (const [name, blurb] of [
-  ['probe', 'measure your brand visibility inside AI answers (ChatGPT / Perplexity / Gemini / Kimi / …)'],
-  ['fix', 'agent mode: generate llms.txt, JSON-LD, FAQ blocks and rewrite briefs from audit results'],
-  ['watch', 'CI mode: score gate + README badge via GitHub Action'],
+// Keep these version promises in sync with the README Roadmap (zh + en).
+for (const [name, plannedVersion, blurb] of [
+  ['probe', 'v0.2', 'measure your brand visibility inside AI answers (ChatGPT / Perplexity / Gemini / Kimi / …)'],
+  ['fix', 'v0.2', 'agent mode: generate llms.txt, JSON-LD, FAQ blocks and rewrite briefs from audit results'],
+  ['watch', 'v0.3', 'CI mode: score gate + README badge via GitHub Action'],
 ] as const) {
   program
     .command(name)
-    .description(`${blurb} — coming in v0.2`)
+    .description(`${blurb} — coming in ${plannedVersion}`)
     .allowUnknownOption(true)
     .action(() => {
       process.stdout.write(
-        `\n  🚧 ${chalk.bold(`geo-doctor ${name}`)} is coming in v0.2.\n` +
+        `\n  🚧 ${chalk.bold(`geo-doctor ${name}`)} is coming in ${plannedVersion}.\n` +
           `  Star the repo to follow along: ${chalk.cyan(REPO_URL)}\n\n`,
       );
     });

@@ -44,7 +44,7 @@ description: GEODoctor 双语（中英）文案契约——改规则文案、REA
 - 代码注释和内部工程文档——**不要求双语**，英文单语即可
 - `.claude/skills/` 本目录——中文单语即可（维护者语言）
 - 改文案顺带想改规则逻辑 → 先读 [rule-change-control](../rule-change-control/SKILL.md)
-- HTML 报告的视觉样式（非文字）→ [architecture-contracts](../architecture-contracts/SKILL.md) 的输出契约
+- HTML 报告的视觉样式（非文字）→ 暂无专门契约；动模板前至少读 [security-boundaries](../security-boundaries/SKILL.md) D3（所有动态插值必须 escapeHtml）
 
 ## 姊妹文档
 

@@ -1,6 +1,6 @@
 ---
 name: debug-audit-pipeline
-description: GEODoctor audit 全链路分层调试——输出不对但不知道断在哪层时使用。crawl→parse→rules→score→report 每层的独立验证方法。
+description: GEODoctor audit 全链路分层调试——审计输出与预期不符、某站某维度分数不知道为什么高/低、或多数站点都异常时使用。fetch→parse→crawl→rules→report 每层独立探针，先读 JSON finding 再定位层。
 ---
 
 # audit 链路分层调试
@@ -52,7 +52,7 @@ console.log({ mainSelector: p.mainSelector, headings: p.headings.length, paragra
 
 ### 第 3 层：crawl（站点级采样）
 
-被审计页面数不对时查这里。`pickInternalLinks` 有两个静默过滤器：`SKIP_EXTENSIONS`（静态资源）和 `SKIP_PATH_HINTS`（login/cart/admin 等）；且**同 pathname 去重**。加 `-p 5` 不生效通常是首页内链本来就少或全被过滤。用不带 `-q` 的运行看实际抓了哪些 URL。
+被审计页面数不对时查这里。`pickInternalLinks` 有两个静默过滤器：`SKIP_EXTENSIONS`（静态资源）和 `SKIP_PATH_HINTS`（login/cart/admin 等）；且按 **pathname+query 去重**（同路径不同参数不会被去重）。加 `-p 5` 不生效通常是首页内链本来就少或全被过滤。用不带 `-q` 的运行看实际抓了哪些 URL。
 
 ### 第 4/5 层：rules 与 report
 

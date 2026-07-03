@@ -1,6 +1,6 @@
 ---
 name: architecture-contracts
-description: GEODoctor 架构不变量法典——动核心数据流、Rule 接口、评分公式、CLI 退出码、Page 结构前必读。破坏任何一条都是跨模块地震。
+description: GEODoctor 架构不变量法典——动核心数据流、爬虫层（fetcher/crawler）、SiteAudit/Page 结构、Rule 接口、评分聚合公式、CLI 退出码、报告渲染层前必读。破坏任何一条都是跨模块地震。
 ---
 
 # 架构契约（不变量法典）
@@ -40,7 +40,7 @@ fetchUrl → parsePage → SiteAudit → runRules → RuleReportEntry[] → Audi
 
 ### C6. Page 的两个反直觉设计（都是故意的）
 
-- `parsePage` 里 **cheerio 加载两次**：主 `$` 先删了 `script/style/noscript`（保证文本干净），而 JSON-LD 藏在 `<script>` 里，所以 `extractJsonLd` 对原始 HTML 二次解析。合并成一次 = jsonLd 永远为空 = structure/freshness 规则集体失明
+- `parsePage` 里 **cheerio 加载两次**：主 `$` 先删了 `script/style/noscript/template`（保证文本干净），而 JSON-LD 藏在 `<script>` 里，所以 `extractJsonLd` 对原始 HTML 二次解析。合并成一次 = jsonLd 永远为空 = structure/freshness 规则集体失明
 - `mainSelector` 是**选择器字符串**存在 Page 上（不是节点引用），规则用 `page.$(page.mainSelector)` 二次查询——因为 cheerio 节点跨函数传引用易碎
 
 ### C7. 网络自保三件套
