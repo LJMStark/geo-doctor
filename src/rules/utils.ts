@@ -142,3 +142,14 @@ export function naResult(finding: Bilingual): RuleResult {
 export function ratioText(failing: number, total: number): string {
   return `${failing}/${total}`;
 }
+
+// eslint-disable-next-line no-control-regex
+const CONTROL_CHARS_RE = new RegExp("\\x1b\\[[0-9;]*[A-Za-z]|\\x1b(?![[])|[\\x00-\\x08\\x0b-\\x1f\\x7f]", "g");
+
+/**
+ * Strip ANSI escape sequences and control characters from site-sourced strings
+ * before they enter findings — hostile pages must not inject terminal control codes.
+ */
+export function stripControlChars(value: string): string {
+  return value.replace(CONTROL_CHARS_RE, '').trim();
+}

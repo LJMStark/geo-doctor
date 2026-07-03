@@ -1,6 +1,6 @@
 import type { Rule } from '../types.js';
 import { isAllowed } from '../crawler/robots.js';
-import { averagePages, bi, ratioText, resultFromScore, textUnits } from './utils.js';
+import { averagePages, bi, ratioText, resultFromScore, stripControlChars, textUnits } from './utils.js';
 
 /** AI search / browsing crawlers — blocking these removes you from AI answers now. */
 const SEARCH_BOTS = [
@@ -112,7 +112,8 @@ export const accessRules: Rule[] = [
     evidence: ['vercel-crawlers'],
     check(site) {
       if (site.sitemap.exists) {
-        return resultFromScore(1, bi(`Sitemap found: ${site.sitemap.url}`, `找到 Sitemap：${site.sitemap.url}`));
+        const shown = stripControlChars(site.sitemap.url ?? '');
+        return resultFromScore(1, bi(`Sitemap found: ${shown}`, `找到 Sitemap：${shown}`));
       }
       return resultFromScore(
         0,

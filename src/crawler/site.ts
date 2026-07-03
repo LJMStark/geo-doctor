@@ -83,7 +83,10 @@ async function resolveSitemap(
   timeoutMs: number,
   progress: (msg: string) => void,
 ): Promise<SitemapInfo> {
-  const candidates = declared.length > 0 ? declared.slice(0, 2) : [`${origin}/sitemap.xml`];
+  const candidates =
+    declared.length > 0
+      ? declared.slice(0, 2).map(safePublicUrl).filter((u): u is string => u !== null)
+      : [`${origin}/sitemap.xml`];
   for (const candidate of candidates) {
     progress(candidate);
     const res = await fetchUrl(candidate, timeoutMs);
@@ -92,6 +95,26 @@ async function resolveSitemap(
     }
   }
   return { exists: false };
+}
+
+const PRIVATE_HOST_RE =
+  /^(localhost$|127\.|0\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|169\.254\.|\[::1?\]$|\[f[cd]|\[fe80|metadata\.)/i;
+
+/**
+ * robots.txt can declare arbitrary Sitemap URLs. Normalize and reject anything
+ * that is not plain public http(s) — loopback, private ranges, link-local and
+ * cloud metadata hosts — so auditing a hostile site cannot probe internal networks (SSRF).
+ */
+export function safePublicUrl(raw: string): string | null {
+  try {
+    const url = new URL(raw.trim());
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+    if (url.username || url.password) return null;
+    if (PRIVATE_HOST_RE.test(url.hostname)) return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
 }
 
 function pickInternalLinks(entry: Page, origin: string, limit: number): string[] {

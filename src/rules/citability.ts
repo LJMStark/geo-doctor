@@ -1,5 +1,14 @@
 import type { Page, Rule } from '../types.js';
-import { averagePages, bi, countFacts, naResult, ratioText, resultFromScore, textUnits } from './utils.js';
+import {
+  averagePages,
+  bi,
+  countFacts,
+  naResult,
+  ratioText,
+  resultFromScore,
+  stripControlChars,
+  textUnits,
+} from './utils.js';
 
 const SHARE_LINK_RE = /(facebook|twitter|x)\.com\/(sharer|share|intent)|linkedin\.com\/share|service\.weibo\.com/i;
 
@@ -265,7 +274,7 @@ export const citabilityRules: Rule[] = [
           bi('Declare og:site_name and Organization JSON-LD with one canonical brand name.', '声明 og:site_name 和 Organization JSON-LD,统一使用一个规范品牌名。'),
         );
       }
-      const list = [...names];
+      const list = [...names].map(stripControlChars);
       const consistent = list.every((n) => n.includes(list[0]!) || list[0]!.includes(n));
       return resultFromScore(
         consistent ? 1 : 0.4,

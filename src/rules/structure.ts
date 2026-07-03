@@ -1,5 +1,13 @@
 import type { Rule } from '../types.js';
-import { averagePages, bi, getMachineDates, jsonLdTypes, ratioText, resultFromScore } from './utils.js';
+import {
+  averagePages,
+  bi,
+  getMachineDates,
+  jsonLdTypes,
+  ratioText,
+  resultFromScore,
+  stripControlChars,
+} from './utils.js';
 
 const CONTENT_SCHEMA_TYPES = new Set([
   'article',
@@ -108,7 +116,8 @@ export const structureRules: Rule[] = [
       const hasContent = [...allTypes].some((t) => CONTENT_SCHEMA_TYPES.has(t));
       const hasBase = [...allTypes].some((t) => BASE_SCHEMA_TYPES.has(t));
       const score = hasContent ? 1 : hasBase ? 0.5 : 0;
-      const found = allTypes.size > 0 ? [...allTypes].slice(0, 8).join(', ') : 'none';
+      const found =
+        allTypes.size > 0 ? stripControlChars([...allTypes].slice(0, 8).join(', ')) : 'none';
       return resultFromScore(
         score,
         bi(`JSON-LD types found: ${found}.`, `发现的 JSON-LD 类型:${found === 'none' ? '无' : found}。`),
