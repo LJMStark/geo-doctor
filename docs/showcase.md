@@ -1,10 +1,10 @@
 # 知名网站 GEO 体检榜 / Well-Known Sites GEO Checkup
 
 > 用 `geo-doctor audit <site> -t 8000`（v0.1.0，默认 3 页抽样）对 11 个知名站点做的 AI 搜索体检。
-> 体检日期：2026-07-03。分数反映当日抓取到的静态信号，站点更新后会变化——欢迎用一行命令复测：
+> 体检日期：2026-07-03。分数反映当日抓取到的静态信号，站点更新后会变化——欢迎复测：
 >
 > ```bash
-> npx geo-doctor audit stripe.com
+> geo-doctor audit stripe.com
 > ```
 
 ## 排行榜

@@ -14,12 +14,16 @@
 ## Quick start
 
 ```bash
-npx geo-doctor audit yoursite.com --html
+git clone https://github.com/LJMStark/geo-doctor.git && cd geo-doctor
+pnpm install && pnpm build
+node dist/cli.js audit yoursite.com --html
 ```
+
+> 📦 npm package coming soon — it will be a single `npx geo-doctor audit yoursite.com`, no clone needed.
 
 ![GEODoctor terminal demo](assets/demo-en.gif)
 
-No install, **no API key**. You get a terminal scorecard (GEO Score 0–100 across 5 dimensions), a shareable HTML report (`--html`) and machine-readable JSON (`--json`).
+**No API key needed.** You get a terminal scorecard (GEO Score 0–100 across 5 dimensions), a shareable HTML report (`--html`) and machine-readable JSON (`--json`).
 
 ## Why GEODoctor?
 
@@ -42,8 +46,8 @@ Chunkability + Citability carry 50% — research shows they are the strongest se
 ## Usage
 
 ```bash
-npx geo-doctor audit example.com                 # terminal scorecard
-npx geo-doctor audit example.com -p 5 --html --json   # sample 5 pages, all reports
+geo-doctor audit example.com                 # terminal scorecard
+geo-doctor audit example.com -p 5 --html --json   # sample 5 pages, all reports
 ```
 
 | Option | Default | Description |

@@ -8,7 +8,6 @@
 
 [English](docs/README.en.md) · [评分方法论](docs/methodology.md) · [知名网站体检榜](docs/showcase.md) · [Roadmap](#-roadmap)
 
-[![npm](https://img.shields.io/npm/v/geo-doctor?color=0f766e)](https://www.npmjs.com/package/geo-doctor)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/Node-%E2%89%A520-339933)](package.json)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-0f766e.svg)](CONTRIBUTING.md)
@@ -20,11 +19,15 @@
 
 ---
 
-## 30 秒开始体检
+## 快速开始
 
 ```bash
-npx geo-doctor audit yoursite.com --html
+git clone https://github.com/LJMStark/geo-doctor.git && cd geo-doctor
+pnpm install && pnpm build
+node dist/cli.js audit yoursite.com --html
 ```
+
+> 📦 npm 包即将发布，届时一行 `npx geo-doctor audit yoursite.com` 即可，无需克隆。
 
 ![GEODoctor 终端演示](docs/assets/demo-zh.gif)
 
@@ -90,13 +93,13 @@ npx geo-doctor audit yoursite.com --html
 
 ```bash
 # 基础体检（终端报告）
-npx geo-doctor audit example.com
+geo-doctor audit example.com
 
 # 多抽几页 + 中文 + 输出 HTML 与 JSON
-npx geo-doctor audit example.com -p 5 --lang zh --html report.html --json report.json
+geo-doctor audit example.com -p 5 --lang zh --html report.html --json report.json
 
 # 所有选项
-npx geo-doctor audit --help
+geo-doctor audit --help
 ```
 
 | 选项 | 默认 | 说明 |
