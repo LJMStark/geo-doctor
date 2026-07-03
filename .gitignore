@@ -14,3 +14,6 @@ geo-report*.json
 .DS_Store
 .idea/
 .vscode/
+
+# local launch drafts — never commit
+LAUNCH.local.md

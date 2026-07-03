@@ -17,6 +17,8 @@
 npx geo-doctor audit yoursite.com --html
 ```
 
+![GEODoctor terminal demo](assets/demo-en.gif)
+
 No install, **no API key**. You get a terminal scorecard (GEO Score 0–100 across 5 dimensions), a shareable HTML report (`--html`) and machine-readable JSON (`--json`).
 
 ## Why GEODoctor?

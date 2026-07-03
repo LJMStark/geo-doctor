@@ -26,6 +26,8 @@
 npx geo-doctor audit yoursite.com --html
 ```
 
+![GEODoctor 终端演示](docs/assets/demo-zh.gif)
+
 无需安装、**无需任何 API Key**。你会得到：
 
 ```
