@@ -1,7 +1,7 @@
 import type { FetchResult } from '../types.js';
 
 const USER_AGENT =
-  'Mozilla/5.0 (compatible; GEODoctor/0.1; +https://github.com/geo-doctor/geo-doctor)';
+  'Mozilla/5.0 (compatible; GEODoctor/0.1; +https://github.com/LJMStark/geo-doctor)';
 
 const MAX_BODY_BYTES = 2 * 1024 * 1024;
 

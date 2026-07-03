@@ -3,6 +3,7 @@ import { renderHtml, escapeHtml } from '../src/report/html';
 import { renderTerminal } from '../src/report/terminal';
 import { renderJson } from '../src/report/json';
 import { scoreSite } from '../src/scoring/scorer';
+import { REPO_URL } from '../src/version';
 import { goodSite, makePage, makeSite } from './helpers';
 
 describe('reports', () => {
@@ -16,7 +17,7 @@ describe('reports', () => {
 
     const en = renderTerminal(report, 'en');
     expect(en).toContain('GEO Score');
-    expect(en).toContain('github.com/geo-doctor');
+    expect(en).toContain(REPO_URL);
   });
 
   test('html report contains score ring, rules and evidence links', () => {
